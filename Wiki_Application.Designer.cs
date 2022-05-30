@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.buttonAdd = new System.Windows.Forms.Button();
             this.buttonDelete = new System.Windows.Forms.Button();
             this.buttonEdit = new System.Windows.Forms.Button();
@@ -35,16 +36,19 @@
             this.buttonLoad = new System.Windows.Forms.Button();
             this.buttonSave = new System.Windows.Forms.Button();
             this.textBoxSearch = new System.Windows.Forms.TextBox();
-            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.textBoxName = new System.Windows.Forms.TextBox();
             this.textBoxDefinition = new System.Windows.Forms.TextBox();
             this.comboBoxCategory = new System.Windows.Forms.ComboBox();
             this.groupBoxStructure = new System.Windows.Forms.GroupBox();
+            this.radioButtonNon_Linear = new System.Windows.Forms.RadioButton();
+            this.radioButtonLinear = new System.Windows.Forms.RadioButton();
             this.labelName = new System.Windows.Forms.Label();
             this.labelCategory = new System.Windows.Forms.Label();
             this.labelDefinition = new System.Windows.Forms.Label();
             this.listViewDisplay = new System.Windows.Forms.ListView();
-            this.radioButtonLinear = new System.Windows.Forms.RadioButton();
-            this.radioButtonNon_Linear = new System.Windows.Forms.RadioButton();
+            this.columnName = new System.Windows.Forms.ColumnHeader();
+            this.columnCategory = new System.Windows.Forms.ColumnHeader();
+            this.toolTipNamebox = new System.Windows.Forms.ToolTip(this.components);
             this.groupBoxStructure.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -56,6 +60,7 @@
             this.buttonAdd.TabIndex = 0;
             this.buttonAdd.Text = "ADD";
             this.buttonAdd.UseVisualStyleBackColor = true;
+            this.buttonAdd.Click += new System.EventHandler(this.buttonAdd_Click);
             // 
             // buttonDelete
             // 
@@ -65,6 +70,7 @@
             this.buttonDelete.TabIndex = 1;
             this.buttonDelete.Text = "DELETE";
             this.buttonDelete.UseVisualStyleBackColor = true;
+            this.buttonDelete.Click += new System.EventHandler(this.buttonDelete_Click);
             // 
             // buttonEdit
             // 
@@ -74,6 +80,7 @@
             this.buttonEdit.TabIndex = 2;
             this.buttonEdit.Text = "EDIT";
             this.buttonEdit.UseVisualStyleBackColor = true;
+            this.buttonEdit.Click += new System.EventHandler(this.buttonEdit_Click);
             // 
             // buttonSearch
             // 
@@ -83,6 +90,7 @@
             this.buttonSearch.TabIndex = 3;
             this.buttonSearch.Text = "Search";
             this.buttonSearch.UseVisualStyleBackColor = true;
+            this.buttonSearch.Click += new System.EventHandler(this.buttonSearch_Click);
             // 
             // buttonLoad
             // 
@@ -92,6 +100,7 @@
             this.buttonLoad.TabIndex = 4;
             this.buttonLoad.Text = "Load";
             this.buttonLoad.UseVisualStyleBackColor = true;
+            this.buttonLoad.Click += new System.EventHandler(this.buttonLoad_Click);
             // 
             // buttonSave
             // 
@@ -101,6 +110,7 @@
             this.buttonSave.TabIndex = 5;
             this.buttonSave.Text = "Save";
             this.buttonSave.UseVisualStyleBackColor = true;
+            this.buttonSave.Click += new System.EventHandler(this.buttonSave_Click);
             // 
             // textBoxSearch
             // 
@@ -109,12 +119,14 @@
             this.textBoxSearch.Size = new System.Drawing.Size(226, 23);
             this.textBoxSearch.TabIndex = 6;
             // 
-            // textBox2
+            // textBoxName
             // 
-            this.textBox2.Location = new System.Drawing.Point(12, 64);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(132, 23);
-            this.textBox2.TabIndex = 7;
+            this.textBoxName.Location = new System.Drawing.Point(12, 64);
+            this.textBoxName.Name = "textBoxName";
+            this.textBoxName.Size = new System.Drawing.Size(132, 23);
+            this.textBoxName.TabIndex = 7;
+            this.toolTipNamebox.SetToolTip(this.textBoxName, "Double click box to clear everything ");
+            this.textBoxName.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.textBoxName_MouseDoubleClick);
             // 
             // textBoxDefinition
             // 
@@ -143,6 +155,30 @@
             this.groupBoxStructure.TabIndex = 10;
             this.groupBoxStructure.TabStop = false;
             this.groupBoxStructure.Text = "Structure";
+            // 
+            // radioButtonNon_Linear
+            // 
+            this.radioButtonNon_Linear.AutoSize = true;
+            this.radioButtonNon_Linear.Location = new System.Drawing.Point(144, 35);
+            this.radioButtonNon_Linear.Name = "radioButtonNon_Linear";
+            this.radioButtonNon_Linear.Size = new System.Drawing.Size(107, 25);
+            this.radioButtonNon_Linear.TabIndex = 1;
+            this.radioButtonNon_Linear.TabStop = true;
+            this.radioButtonNon_Linear.Text = "Non-Linear";
+            this.radioButtonNon_Linear.UseVisualStyleBackColor = true;
+            this.radioButtonNon_Linear.CheckedChanged += new System.EventHandler(this.radioButtonNon_Linear_CheckedChanged);
+            // 
+            // radioButtonLinear
+            // 
+            this.radioButtonLinear.AutoSize = true;
+            this.radioButtonLinear.Location = new System.Drawing.Point(12, 35);
+            this.radioButtonLinear.Name = "radioButtonLinear";
+            this.radioButtonLinear.Size = new System.Drawing.Size(71, 25);
+            this.radioButtonLinear.TabIndex = 0;
+            this.radioButtonLinear.TabStop = true;
+            this.radioButtonLinear.Text = "Linear";
+            this.radioButtonLinear.UseVisualStyleBackColor = true;
+            this.radioButtonLinear.CheckedChanged += new System.EventHandler(this.radioButtonLinear_CheckedChanged);
             // 
             // labelName
             // 
@@ -176,33 +212,25 @@
             // 
             // listViewDisplay
             // 
+            this.listViewDisplay.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.columnName,
+            this.columnCategory});
             this.listViewDisplay.Location = new System.Drawing.Point(305, 64);
             this.listViewDisplay.Name = "listViewDisplay";
             this.listViewDisplay.Size = new System.Drawing.Size(338, 351);
             this.listViewDisplay.TabIndex = 14;
             this.listViewDisplay.UseCompatibleStateImageBehavior = false;
+            this.listViewDisplay.View = System.Windows.Forms.View.Details;
             // 
-            // radioButtonLinear
+            // columnName
             // 
-            this.radioButtonLinear.AutoSize = true;
-            this.radioButtonLinear.Location = new System.Drawing.Point(12, 35);
-            this.radioButtonLinear.Name = "radioButtonLinear";
-            this.radioButtonLinear.Size = new System.Drawing.Size(71, 25);
-            this.radioButtonLinear.TabIndex = 0;
-            this.radioButtonLinear.TabStop = true;
-            this.radioButtonLinear.Text = "Linear";
-            this.radioButtonLinear.UseVisualStyleBackColor = true;
+            this.columnName.Text = "Name";
+            this.columnName.Width = 169;
             // 
-            // radioButtonNon_Linear
+            // columnCategory
             // 
-            this.radioButtonNon_Linear.AutoSize = true;
-            this.radioButtonNon_Linear.Location = new System.Drawing.Point(144, 35);
-            this.radioButtonNon_Linear.Name = "radioButtonNon_Linear";
-            this.radioButtonNon_Linear.Size = new System.Drawing.Size(107, 25);
-            this.radioButtonNon_Linear.TabIndex = 1;
-            this.radioButtonNon_Linear.TabStop = true;
-            this.radioButtonNon_Linear.Text = "Non-Linear";
-            this.radioButtonNon_Linear.UseVisualStyleBackColor = true;
+            this.columnCategory.Text = "Category";
+            this.columnCategory.Width = 169;
             // 
             // Wiki_Application
             // 
@@ -216,7 +244,7 @@
             this.Controls.Add(this.groupBoxStructure);
             this.Controls.Add(this.comboBoxCategory);
             this.Controls.Add(this.textBoxDefinition);
-            this.Controls.Add(this.textBox2);
+            this.Controls.Add(this.textBoxName);
             this.Controls.Add(this.textBoxSearch);
             this.Controls.Add(this.buttonSave);
             this.Controls.Add(this.buttonLoad);
@@ -226,6 +254,7 @@
             this.Controls.Add(this.buttonAdd);
             this.Name = "Wiki_Application";
             this.Text = "Wiki Application";
+            this.Load += new System.EventHandler(this.Wiki_Application_Load);
             this.groupBoxStructure.ResumeLayout(false);
             this.groupBoxStructure.PerformLayout();
             this.ResumeLayout(false);
@@ -242,7 +271,7 @@
         private Button buttonLoad;
         private Button buttonSave;
         private TextBox textBoxSearch;
-        private TextBox textBox2;
+        private TextBox textBoxName;
         private TextBox textBoxDefinition;
         private ComboBox comboBoxCategory;
         private GroupBox groupBoxStructure;
@@ -252,5 +281,8 @@
         private Label labelCategory;
         private Label labelDefinition;
         private ListView listViewDisplay;
+        private ColumnHeader columnName;
+        private ColumnHeader columnCategory;
+        private ToolTip toolTipNamebox;
     }
 }
