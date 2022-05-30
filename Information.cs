@@ -8,5 +8,6 @@ namespace Wiki_Application
 {
     internal class Information
     {
+
     }
 }
