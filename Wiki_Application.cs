@@ -1,10 +1,11 @@
 namespace Wiki_Application
 {
-    public partial class Form1 : Form
+    public partial class Wiki_Application : Form
     {
-        public Form1()
+        public Wiki_Application()
         {
             InitializeComponent();
         }
+
     }
 }
