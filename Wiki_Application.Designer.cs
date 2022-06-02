@@ -221,6 +221,7 @@
             this.listViewDisplay.TabIndex = 14;
             this.listViewDisplay.UseCompatibleStateImageBehavior = false;
             this.listViewDisplay.View = System.Windows.Forms.View.Details;
+            this.listViewDisplay.SelectedIndexChanged += new System.EventHandler(this.listViewDisplay_SelectedIndexChanged);
             // 
             // columnName
             // 

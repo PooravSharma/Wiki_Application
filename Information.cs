@@ -8,14 +8,17 @@ using System.Threading.Tasks;
 
 namespace Wiki_Application
 {
-    internal class Information
+    internal class Information 
     {
         private string name;
         private string category;
         private string structure;
         private string definition;
 
-        public Information() { }
+        public Information() 
+        { 
+            Information i = new Information("default", "default", "default", "default");
+        } 
         public Information(string newName, string newCategory, string newStructure, string newDefinition)
         {
             name = newName;
@@ -29,7 +32,21 @@ namespace Wiki_Application
         public string gsStructure { get => structure; set => structure = value; }
         public string gsDefinition { get => definition; set => definition = value; }
 
-
+        public int CompareTo(Information Info)
+        {
+            if (Info.gsName == null)
+            {
+                return 1;
+            }
+            if(Info.gsName != null)
+            {
+                return gsName.CompareTo(((Information)Info).gsName);
+            }
+            else
+            {
+                return 0;
+            }
+        }
 
     }
 }

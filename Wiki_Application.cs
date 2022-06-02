@@ -8,15 +8,17 @@ namespace Wiki_Application
         {
             InitializeComponent();
         }
-        string checkStructure;
+        string checkStructure = "";
+        int count = 0;
+
         //6.2 Create a global List<T> of type Information called Wiki.
         List<Information> Wiki = new List<Information>();
+
         //6.4 Create and initialise a global string array with the six categories as indicated in the Data Structure Matrix. Create a custom method to populate the ComboBox when the Form Load method is called.
-        String[] comboCategory = {"Array", "List", "Tree", "Graphs", "Abstract", "Hash"};
+        String[] comboCategory = { "Array", "List", "Tree", "Graphs", "Abstract", "Hash" };
 
         //6.3 Create a button method to ADD a new item to the list. Use a TextBox for the Name input, ComboBox for the Category, Radio group for the Structure and Multiline TextBox for the Definition.
         //6.5 Create a custom ValidName method which will take a parameter string value from the Textbox Name and returns a Boolean after checking for duplicates. Use the built in List<T> method “Exists” to answer this requirement.
-
         string currentFileName = "Information.dat";
         private void buttonAdd_Click(object sender, EventArgs e)
         {
@@ -24,13 +26,15 @@ namespace Wiki_Application
             {
                 if (ValidName(textBoxName.Text))
                 {
-                    Information newInfo = new Information();
-                    newInfo.gsName = textBoxName.Text;
-                    newInfo.gsCategory = comboBoxCategory.Text;
-                    newInfo.gsStructure = checkStructure;
-                    newInfo.gsDefinition = textBoxDefinition.Text;
-                   // Information newInfo = new Information(newInfo.gsName, newInfo.gsCategory, newInfo.gsStructure, newInfo.gsDefinition);
+                    string name = textBoxName.Text;
+                    string category = comboBoxCategory.Text;
+                    string structure = checkStructure;
+                    string definition = textBoxDefinition.Text;
+                    Information newInfo = new Information(name, category, structure, definition);
+                    count++;
                     Clear();
+                    Display();
+                    
                 }
                 else
                 {
@@ -55,7 +59,34 @@ namespace Wiki_Application
 
         private void buttonLoad_Click(object sender, EventArgs e)
         {
-
+            string fileName = currentFileName;
+            OpenFileDialog OpenText = new OpenFileDialog();
+            DialogResult sr = OpenText.ShowDialog();
+            fileName = OpenText.FileName;
+            try
+            {
+                using (var stream = File.Open(fileName, FileMode.Open))
+                {
+                    using (var reader = new BinaryReader(stream, Encoding.UTF8, false))
+                    {
+                        Wiki.Clear();
+                        while (stream.Position < stream.Length)
+                        {
+                            string name = reader.ReadString();
+                            string category = reader.ReadString();
+                            string structure = reader.ReadString();
+                            string definition = reader.ReadString();
+                            Information loadInfo = new Information(name, category, structure, definition);
+                            Wiki.Add(loadInfo);
+                        }
+                    }
+                }
+            }
+            catch (IOException ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
+            Display();
         }
 
         private void buttonSave_Click(object sender, EventArgs e)
@@ -75,55 +106,37 @@ namespace Wiki_Application
             {
                 SaveText.FileName = fileName;
             }
-            try
-            {
-                using (var stream = File.Open(currentFileName, FileMode.Create))
-                {
-                    using (var writer = new BinaryWriter(stream, Encoding.UTF8, false))
-                    {
-                        foreach (var info in Wiki)
-                        {
-                            writer.Write(info.gsName);
-                            writer.Write(info.gsCategory);
-                            writer.Write(info.gsStructure);
-                            writer.Write(info.gsDefinition);
-                        }
-                    }
-                }
-            }
-            catch (IOException ex)
-            {
-                MessageBox.Show(ex.ToString());
-            }
-
+            Save(fileName);
+            Display();
         }
-    
+
 
         private void buttonSearch_Click(object sender, EventArgs e)
         {
             if (!string.IsNullOrEmpty(textBoxSearch.Text))
             {
+                Information info = new Information(textBoxSearch.Text, "0", "0", "0");
 
-                if (Wiki.BinarySearch(textBoxSearch.Text) == 0)
+                if (Wiki.BinarySearch(info) == 0)
                 {
                     MessageBox.Show("The Name is Found", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    
+
                 }
                 else
                 {
                     MessageBox.Show("The Name is Not Found", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                   
+
                 }
             }
             else
             {
                 MessageBox.Show("Search Box is empty", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                
+
             }
             textBoxSearch.Clear();
             textBoxSearch.Focus();
-        
-    }
+
+        }
 
         //6.6 Create two methods to highlight and return the values from the Radio button GroupBox. The first method must return a string value from the selected radio button (Linear or Non-Linear). The second method must send an integer index which will highlight an appropriate radio button.
         private void radioButtonLinear_CheckedChanged(object sender, EventArgs e)
@@ -137,7 +150,7 @@ namespace Wiki_Application
 
         private void textBoxName_MouseDoubleClick(object sender, MouseEventArgs e)
         {
-            Clear();            
+            Clear();
         }
 
         //6.4 Create and initialise a global string array with the six categories as indicated in the Data Structure Matrix. Create a custom method to populate the ComboBox when the Form Load method is called.
@@ -147,6 +160,21 @@ namespace Wiki_Application
             Display();
         }
 
+
+        private void listViewDisplay_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            int index = listViewDisplay.SelectedIndices[0];
+            if (index != -1)
+            {
+                DisplayObject(index);
+
+            }
+            else
+            {
+                MessageBox.Show("Please select from the array Box", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+
+        }
 
         #region Methods 
         private void Clear()
@@ -180,16 +208,62 @@ namespace Wiki_Application
         private void Display()
         {
             listViewDisplay.Items.Clear();
+          Information display = new Information();
+            for(int i = 0; i < count; i++)
+            {
+                /*String[] row = { display.gsName, display.gsCategory };
+                ListViewItem item = new ListViewItem(row);
+                listViewDisplay.Items.Add(item);*/
+                ListViewItem item1 = new ListViewItem(display.gsName,display.gsCategory);
+               // item1.SubItems.Add("Category");
+                listViewDisplay.Items.AddRange(new ListViewItem[] { item1 });
+            }
             Wiki.Sort();
-            foreach (var newInfo in Wiki)
-            { 
-            listViewDisplay.Items.Add(newInfo.gsName);
-                listViewDisplay.Items.Add(newInfo.gsCategory);
+
+        }
+        private void DisplayObject(int x)
+        {
+            textBoxName.Text = Wiki[x].gsName;
+            comboBoxCategory.Text = Wiki[x].gsCategory;
+            textBoxDefinition.Text = Wiki[x].gsDefinition;
+            if (Wiki[x].gsStructure == "Linear")
+            {
+                radioButtonLinear.Checked = true;
+            }
+            else
+            {
+                radioButtonNon_Linear.Checked = true;
+            }
+            listViewDisplay.Items[x].Selected = true;
+        }
+        private void Save(string filename)
+        {
+            try
+            {
+                using (var stream = File.Open(filename, FileMode.Create))
+                {
+                    using (var writer = new BinaryWriter(stream))
+                    {
+                        foreach (var info in Wiki)
+                        {
+                            writer.Write(info.gsName);
+                            writer.Write(info.gsCategory);
+                            writer.Write(info.gsStructure);
+                            writer.Write(info.gsDefinition);
+                        }
+                    }
+                }
+            }
+            catch (IOException ex)
+            {
+                MessageBox.Show(ex.ToString());
             }
         }
 
-        #endregion
 
+
+
+        #endregion
 
     }
 }
