@@ -31,10 +31,11 @@ namespace Wiki_Application
                     string structure = checkStructure;
                     string definition = textBoxDefinition.Text;
                     Information newInfo = new Information(name, category, structure, definition);
+                    Wiki.Add(newInfo);
                     count++;
                     Clear();
                     Display();
-                    
+
                 }
                 else
                 {
@@ -157,7 +158,7 @@ namespace Wiki_Application
         private void Wiki_Application_Load(object sender, EventArgs e)
         {
             ComboBoxFill();
-            Display();
+
         }
 
 
@@ -207,16 +208,15 @@ namespace Wiki_Application
         }
         private void Display()
         {
-            listViewDisplay.Items.Clear();
-          Information display = new Information();
-            for(int i = 0; i < count; i++)
+            Information loadInfo = new Information("ads", "category", "feefstructure", "definition");
+
+            foreach (Information info in Wiki)
             {
-                /*String[] row = { display.gsName, display.gsCategory };
-                ListViewItem item = new ListViewItem(row);
-                listViewDisplay.Items.Add(item);*/
-                ListViewItem item1 = new ListViewItem(display.gsName,display.gsCategory);
-               // item1.SubItems.Add("Category");
-                listViewDisplay.Items.AddRange(new ListViewItem[] { item1 });
+
+                ListViewItem item = new ListViewItem(info.gsName);
+                item.SubItems.Add(info.gsCategory);
+                listViewDisplay.Items.Add(item);
+
             }
             Wiki.Sort();
 

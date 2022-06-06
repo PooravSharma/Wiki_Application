@@ -34,7 +34,13 @@ namespace Wiki_Application
 
         public int CompareTo(Information Info)
         {
-            if (Info.gsName == null)
+            int compareName = gsName.CompareTo(Info.gsName);
+            if (compareName < 0) return -1;
+            if (compareName > 0) return 1;
+            return 0;
+
+
+            /*if (Info.gsName == null)
             {
                 return 1;
             }
@@ -45,7 +51,7 @@ namespace Wiki_Application
             else
             {
                 return 0;
-            }
+            }*/
         }
 
     }
