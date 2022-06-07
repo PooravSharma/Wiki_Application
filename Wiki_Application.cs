@@ -62,6 +62,7 @@ namespace Wiki_Application
                     Wiki.RemoveAt(index);
                     Clear();
                     Display();
+                    MessageBox.Show("Item has been deleted", "Notice", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
                 else
                 {
