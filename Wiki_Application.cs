@@ -35,11 +35,12 @@ namespace Wiki_Application
                     count++;
                     Clear();
                     Display();
-
+                  
                 }
                 else
                 {
-                    MessageBox.Show("Plate is already present in list", "Aleart", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                    MessageBox.Show("Item is already present in list", "Aleart", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                    System.Diagnostics.Trace.WriteLine("Item is already present in list");
                 }
             }
             else
@@ -63,6 +64,7 @@ namespace Wiki_Application
                     Clear();
                     Display();
                     MessageBox.Show("Item has been deleted", "Notice", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    System.Diagnostics.Trace.WriteLine("Item has been deleted");
                 }
                 else
                 {
@@ -91,6 +93,7 @@ namespace Wiki_Application
                     Clear();
                     Display();
                     MessageBox.Show("Edit complete", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    System.Diagnostics.Trace.WriteLine("Edit complete");
                 }
                 else
                 {
