@@ -221,7 +221,8 @@
             this.listViewDisplay.TabIndex = 14;
             this.listViewDisplay.UseCompatibleStateImageBehavior = false;
             this.listViewDisplay.View = System.Windows.Forms.View.Details;
-            this.listViewDisplay.SelectedIndexChanged += new System.EventHandler(this.listViewDisplay_SelectedIndexChanged);
+            
+            this.listViewDisplay.DoubleClick += new System.EventHandler(this.listViewDisplay_DoubleClick);
             // 
             // columnName
             // 
@@ -255,6 +256,7 @@
             this.Controls.Add(this.buttonAdd);
             this.Name = "Wiki_Application";
             this.Text = "Wiki Application";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Wiki_Application_FormClosed);
             this.Load += new System.EventHandler(this.Wiki_Application_Load);
             this.groupBoxStructure.ResumeLayout(false);
             this.groupBoxStructure.PerformLayout();

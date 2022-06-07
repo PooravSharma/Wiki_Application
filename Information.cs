@@ -8,14 +8,14 @@ using System.Threading.Tasks;
 
 namespace Wiki_Application
 {
-    internal class Information 
+    class Information : IComparable  
     {
         private string name;
         private string category;
         private string structure;
         private string definition;
 
-        public Information() 
+        public Information()
         { 
             Information i = new Information("default", "default", "default", "default");
         } 
@@ -32,26 +32,12 @@ namespace Wiki_Application
         public string gsStructure { get => structure; set => structure = value; }
         public string gsDefinition { get => definition; set => definition = value; }
 
-        public int CompareTo(Information Info)
+        public int CompareTo(Object Info)
         {
-            int compareName = gsName.CompareTo(Info.gsName);
+            int compareName = gsName.CompareTo(((Information)Info).gsName);
             if (compareName < 0) return -1;
             if (compareName > 0) return 1;
             return 0;
-
-
-            /*if (Info.gsName == null)
-            {
-                return 1;
-            }
-            if(Info.gsName != null)
-            {
-                return gsName.CompareTo(((Information)Info).gsName);
-            }
-            else
-            {
-                return 0;
-            }*/
         }
 
     }
