@@ -189,7 +189,7 @@ namespace Wiki_Application
         {
             ComboBoxFill();
             LoadFile("Information.dat");
-            /*try
+           /* try
             {
                 using (var stream = File.Open("category.dat", FileMode.Create))
                 {
@@ -198,7 +198,7 @@ namespace Wiki_Application
                         foreach (var String in comboCategory)
                         {
                             writer.Write(String);
-                            
+
                         }
                     }
                 }
